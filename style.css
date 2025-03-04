@@ -1,0 +1,94 @@
+body {
+    font-family: Arial, sans-serif;
+    text-align: center;
+}
+
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+h1, h2 {
+    margin-bottom: 10px;
+}
+
+/* Speed Slider */
+#speed-container {
+    margin-bottom: 20px; /* Space below the slider */
+}
+
+/* Mario Animation */
+#mario-container {
+    position: relative;
+    width: 100vw;
+    height: 150px;
+    overflow: hidden;
+}
+
+#marioGif {
+    position: absolute;
+    width: 100px;
+    left: -100px;
+    animation: run-animation 5s linear infinite;
+}
+
+@keyframes run-animation {
+    0% { left: -100px; }
+    100% { left: 100vw; }
+}
+
+
+
+/* BPM Info */
+#bpm-info {
+    margin-top: 20px;
+}
+
+/* Heart Rate Zones */
+#zones {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 20px; /* Space above zones */
+}
+
+.zone {
+    padding: 15px;
+    border-radius: 10px;
+    font-weight: bold;
+    text-align: center;
+    flex: 1;
+}
+
+.zone1 { background-color: yellow; }
+.zone2 { background-color: lightgreen; }
+.zone3 { background-color: lightblue; }
+.zone4 { background-color: violet; }
+.zone5 { background-color: tomato; }
+
+.zone {
+    opacity: 0.3;
+}
+
+.highlight {
+    opacity: 1;
+}
+.zone-container {
+    text-align: center;
+    margin-bottom: 15px;
+}
+
+.zone-info {
+    display: none; /* Initially hidden */
+    font-size: 14px;
+    color: black;
+    text-align: center;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+/* Show the description when the zone is highlighted */
+.zone.highlight + .zone-info {
+    display: block;
+}
