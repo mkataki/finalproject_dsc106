@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Understanding HR Max</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="global.js" defer></script>
+</head>
+<body>
+    <div id="maxhr-screen">
+        <h1>Calculating Maximum Heart Rate (HR Max)</h1>
+        <p>
+            Your maximum heart rate (HR Max) is an estimate of the highest heart rate 
+            you can safely achieve during intense exercise. A common formula to estimate HR Max is:
+        </p>
+        <h2><strong>HR Max = 220 - Age</strong></h2>
+        <p>
+            Once you determine your HR Max, you can calculate your target heart rate zones 
+            by multiplying your HR Max by the percentage range of each zone.
+        </p>
+        <p>
+            This is the formula that we will follow for our tool later.
+        </p>
+        <button id="next-button">Continue</button>
+    </div>
+
+    <script>
+        document.getElementById("next-button").addEventListener("click", function () {
+            window.location.href = "zones.html"; 
+        });
+    </script>
+</body>
+</html>

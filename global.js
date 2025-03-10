@@ -6,7 +6,7 @@ document.addEventListener("DOMContentLoaded", function () {
         startButton.addEventListener("click", function () {
             document.getElementById("intro-screen").classList.add("fade-out");
             setTimeout(() => {
-                window.location.href = "zones.html";  // Redirect to the Heart Rate Zone explanation page
+                window.location.href = "maxhr.html";  
             }, 1000);
         });
     }

@@ -3,7 +3,7 @@ document.addEventListener("DOMContentLoaded", function () {
     const zoneTitle = document.getElementById("zone-title");
     const zoneDescription = document.getElementById("zone-description");
     const marioGif = document.getElementById("marioGif");
-    const startQuizButton = document.getElementById("start-quiz-button");
+    const nextButton = document.getElementById("next-button"); // Reference Next button
 
     const zoneData = {
         "zone1": {
@@ -28,10 +28,13 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     };
 
+    let selectedZone = "";
+
     zones.forEach(zone => {
         zone.addEventListener("click", function () {
             let zoneId = this.classList[1]; // Get zone class name (e.g., "zone1", "zone2")
             let speed = parseInt(this.dataset.speed);
+            selectedZone = zoneId; // Store selected zone
 
             // Update zone title and description
             if (zoneData[zoneId]) {
@@ -40,17 +43,21 @@ document.addEventListener("DOMContentLoaded", function () {
             }
 
             // Change Mario's speed
-            let animationSpeed = Math.max(2, 12 - speed); // Prevents disappearing issue
+            let animationSpeed = Math.max(2, 12 - speed); 
             marioGif.style.animation = `run-animation ${animationSpeed}s infinite linear`;
 
             // Highlight the selected zone
             zones.forEach(z => z.classList.remove("highlight"));
             this.classList.add("highlight");
+
+            // Show the Next button when a zone is selected
+            nextButton.style.display = "block";
         });
     });
 
-    // Redirect to quiz page when "Start Quiz" is clicked
-    startQuizButton.addEventListener("click", function () {
-        window.location.href = "quiz.html";
+    // Event listener for "Next" button to go to scenario page
+    nextButton.addEventListener("click", function () {
+        localStorage.setItem("selectedZone", selectedZone); // Store selected zone
+        window.location.href = "scenario.html"; // Navigate to scenario page
     });
 });

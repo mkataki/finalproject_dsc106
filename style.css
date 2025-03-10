@@ -125,6 +125,14 @@ h1, h2 {
     cursor: pointer;
     margin-top: 20px;
 }
+#next-button {
+    padding: 12px 20px;
+    font-size: 18px;
+    background-color: #ffcc00;
+    border: none;
+    cursor: pointer;
+    margin-top: 20px;
+}
 
 /* Fade-out effect when transitioning */
 .fade-out {
@@ -223,3 +231,32 @@ h1, h2 {
     0% { left: -100px; }
     100% { left: 100vw; }
 }
+
+/* Ensure Peach starts from the left */
+#mario-container {
+    position: relative;
+    width: 100vw;
+    height: 150px;
+    overflow: hidden;
+    margin-top: 20px;
+    display: flex;
+    justify-content: flex-start;
+}
+
+/* Fix Peach’s starting position and flip her */
+#peachGif {
+    width: 120px;
+    position: absolute;
+    left: -100px; /* Starts off-screen */
+    display: block;
+    transform: scaleX(-1); /* Flip horizontally */
+    animation: run-animation 8s linear infinite;
+}
+
+/* Ensure animation moves her from left to right */
+@keyframes run-animation {
+    0% { left: -100px; }
+    100% { left: 100vw; }
+}
+
+
