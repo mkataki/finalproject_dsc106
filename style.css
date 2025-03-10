@@ -92,3 +92,134 @@ h1, h2 {
 .zone.highlight + .zone-info {
     display: block;
 }
+/* --- INTRO SCREEN --- */
+#intro-screen {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    background-color: white;
+    position: absolute;
+    width: 100%;
+    top: 0;
+    left: 0;
+    transition: opacity 1s;
+}
+
+#intro-mario {
+    width: 150px;
+    animation: bounce 1s infinite;
+}
+
+@keyframes bounce {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+}
+
+#start-button {
+    padding: 12px 20px;
+    font-size: 18px;
+    background-color: #ffcc00;
+    border: none;
+    cursor: pointer;
+    margin-top: 20px;
+}
+
+/* Fade-out effect when transitioning */
+.fade-out {
+    opacity: 0;
+}
+.hidden {
+    display: none;
+}
+
+#scenario-screen {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    background-color: white;
+    position: absolute;
+    width: 100%;
+    top: 0;
+    left: 0;
+    transition: opacity 1s;
+}
+
+.fade-out {
+    opacity: 0;
+}
+.fade-in {
+    opacity: 1;
+}
+
+#zone-explanation {
+    text-align: center;
+    margin: 20px;
+}
+
+#zones {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+.zone {
+    padding: 15px;
+    border-radius: 10px;
+    font-weight: bold;
+    text-align: center;
+    flex: 1;
+    cursor: pointer;
+}
+
+.zone1 { background-color: yellow; }
+.zone2 { background-color: lightgreen; }
+.zone3 { background-color: lightblue; }
+.zone4 { background-color: violet; }
+.zone5 { background-color: tomato; }
+
+.zone:hover {
+    opacity: 0.8;
+}
+
+.highlight {
+    border: 2px solid black;
+    opacity: 1;
+}
+
+#zone-info {
+    margin-top: 20px;
+}
+
+#continue-button {
+    margin-top: 20px;
+    padding: 10px 20px;
+    font-size: 16px;
+    background-color: #ffcc00;
+    border: none;
+    cursor: pointer;
+}
+
+#mario-container {
+    position: relative;
+    width: 100vw;
+    height: 150px;
+    overflow: hidden;
+    margin-top: 20px;
+}
+
+#marioGif {
+    position: absolute;
+    width: 100px;
+    left: -100px;
+    animation: run-animation 5s linear infinite;
+}
+
+@keyframes run-animation {
+    0% { left: -100px; }
+    100% { left: 100vw; }
+}

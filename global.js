@@ -1,4 +1,17 @@
 let dataset = [];
+document.addEventListener("DOMContentLoaded", function () {
+    const startButton = document.getElementById("start-button");
+
+    if (startButton) {
+        startButton.addEventListener("click", function () {
+            document.getElementById("intro-screen").classList.add("fade-out");
+            setTimeout(() => {
+                window.location.href = "zones.html";  // Redirect to the Heart Rate Zone explanation page
+            }, 1000);
+        });
+    }
+});
+
 
 // Function to remove duplicates by ID
 function removeDuplicatesByID(data) {
