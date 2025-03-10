@@ -27,6 +27,12 @@ function removeDuplicatesByID(data) {
 
     return uniqueData;
 }
+function updateSpeedLabel() {
+    let speed = document.getElementById("speed").value;
+    document.getElementById("speedValue").textContent = speed + " km/h";
+}
+
+
 
 // Load CSV file using D3.js
 d3.csv("dataclean.csv", function(row) {
@@ -34,16 +40,10 @@ d3.csv("dataclean.csv", function(row) {
         time: +row.time,
         speed: +row.Speed,
         HR: +row.HR,
-        VO2: +row.VO2,
-        VCO2: +row.VCO2,
-        RR: +row.RR,
-        VE: +row.VE,
         ID: row.ID,
         age: +row.Age,
         weight: +row.Weight,
         height: +row.Height,
-        humidity: +row.Humidity,
-        temperature: +row.Temperature,
         gender: +row.Sex
     };
 }).then(data => {
@@ -54,26 +54,70 @@ d3.csv("dataclean.csv", function(row) {
     alert("Failed to load CSV file. Please check the console for details.");
 });
 
-// Function to update speed label dynamically
-function updateSpeedLabel() {
-    let speed = document.getElementById("speed").value;
-    document.getElementById("speedValue").textContent = speed + " km/h";
+// Updated Logarithmic Regression coefficients from Python
+const logCoefficients = {
+    w0: 301.31015653243117,  // Intercept
+    height: -65.773440,
+    weight: 18.843343,
+    age: -19.021465,
+    sex: 9.029210,
+    speed: 33.592657,
+    time: 14.653400
+};
+
+// Function to apply logarithmic transformation
+function logTransform(value) {
+    return Math.log1p(value);  // log(1 + x) to avoid log(0) issues
 }
 
-// Function to predict HR based on bins and speed
 function predictHeartRate() {
-    const speed = parseFloat(document.getElementById("speed").value);
+    const height = parseFloat(document.getElementById("height").value);
+    const weight = parseFloat(document.getElementById("weight").value);
     const age = parseInt(document.getElementById("age").value);
-    const gender = parseInt(document.getElementById("gender").value);
+    const sex = parseInt(document.getElementById("gender").value); // Male = 0, Female = 1
+    const speed = parseFloat(document.getElementById("speed").value);
+    const time = parseFloat(document.getElementById("time").value);
 
-    let maxHR = gender === 0 ? 211 - (0.64 * age) : 210 - (0.67 * age);
+    // Apply log transformation
+    const logHeight = logTransform(height);
+    const logWeight = logTransform(weight);
+    const logAge = logTransform(age);
+    const logSpeed = logTransform(speed);
+    const logTime = logTransform(time);
 
-    let basePercentage = 50;
-    let speedAdjustment = (speed - 3) * 5;
-    let percentageHR = Math.min(basePercentage + speedAdjustment, 95);
+    // Predict HR using the Logarithmic Ridge Regression model
+    let estimatedHR = 
+        logCoefficients.w0 +
+        (logCoefficients.height * logHeight) +
+        (logCoefficients.weight * logWeight) +
+        (logCoefficients.age * logAge) +
+        (logCoefficients.sex * sex) +  // No log for categorical variable
+        (logCoefficients.speed * logSpeed) +
+        (logCoefficients.time * logTime);
 
-    let estimatedHR = Math.round((maxHR * percentageHR) / 100);
+    // **Apply Hard-Coded Speed Adjustments**
+    if (speed < 8) {
+        estimatedHR *= 0.65;  // Reduce HR for walking speeds
+    } else if (speed >= 8 && speed <= 12) {
+        estimatedHR *= 0.85;  // Reduce HR slightly for jogging speeds
+    }
+    // Speeds > 12 km/h remain unchanged
+
+    // Ensure HR is within a reasonable range (40-220 bpm)
+    estimatedHR = Math.max(40, Math.min(Math.round(estimatedHR), 220));
+
+    // Display predicted HR
     document.getElementById("predictedHR").textContent = estimatedHR + " bpm";
+
+    // Assign heart rate zones dynamically
+    assignHeartRateZone(estimatedHR, age);
+}
+
+
+// Function to determine HR zone dynamically based on Max HR formula
+function assignHeartRateZone(hr, age) {
+    let maxHR = 220 - age; // Standard Max HR formula
+    let percentageHR = (hr / maxHR) * 100;
 
     let zone = "";
     if (percentageHR < 60) zone = "zone1";
@@ -86,26 +130,38 @@ function predictHeartRate() {
     highlightZone(zone);
 }
 
-// Function to highlight the correct HR zone box
+// Function to highlight the correct HR zone
 function highlightZone(activeZone) {
     const zones = document.querySelectorAll(".zone");
     const descriptions = document.querySelectorAll(".zone-info");
 
     zones.forEach(zone => {
         if (zone.id === activeZone) {
-            zone.classList.add("highlight"); // Highlight active zone
+            zone.classList.add("highlight");
         } else {
-            zone.classList.remove("highlight"); // Remove highlight from other zones
+            zone.classList.remove("highlight");
         }
     });
 
     descriptions.forEach(desc => {
         if (desc.id === `info-${activeZone}`) {
-            desc.style.display = "block"; // Show correct description
+            desc.style.display = "block";
         } else {
-            desc.style.display = "none"; // Hide other descriptions
+            desc.style.display = "none";
         }
     });
+}
+
+// Automatically update HR and zones when speed slider changes
+document.getElementById("speed").addEventListener("input", function () {
+    updateSpeedLabel();
+    predictHeartRate();
+});
+
+// Function to update speed label dynamically
+function updateSpeedLabel() {
+    let speed = document.getElementById("speed").value;
+    document.getElementById("speedValue").textContent = speed + " km/h";
 }
 
 
