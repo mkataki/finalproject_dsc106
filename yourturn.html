@@ -11,9 +11,23 @@
     <div id="yourturn-screen">
         <h1>Now It's Your Turn!</h1>
         <p>You've seen how Mario and Peach train to reach their goals. Now it's time to track your own heart rate and optimize your training!</p>
-        <p>Get ready to explore your own fitness zones and improve your endurance.</p>
+        <p>Get ready to explore your own heart rate zones while training and improve your cardiovascular health.</p>
 
-        <button id="next-button" class="button">Continue</button>
+        <!-- Button Container -->
+        <div id="yourturn-next-button-container">
+            <button id="next-button" class="button">Next</button>
+        </div>
+    </div>
+
+    <!-- Timeline Section -->
+    <div id="timeline">
+        <button class="timeline-button" onclick="navigateToPage('index.html')">Welcome</button>
+        <button class="timeline-button" onclick="navigateToPage('maxhr.html')">Maximum Heart Rate</button>
+        <button class="timeline-button" onclick="navigateToPage('zones.html')">HR Zones</button>
+        <button class="timeline-button" onclick="navigateToPage('scenario.html')">Scenario 1</button>
+        <button class="timeline-button" onclick="navigateToPage('scenario2.html')">Scenario 2</button>
+        <button class="timeline-button" onclick="navigateToPage('yourturn.html')">Your Turn</button>
+        <button class="timeline-button" onclick="navigateToPage('tracker.html')">Tool</button>
     </div>
 </body>
 </html>

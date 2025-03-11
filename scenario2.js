@@ -16,3 +16,8 @@ document.addEventListener("DOMContentLoaded", function () {
         window.location.href = "yourturn.html"; // Move to your turn page
     });
 });
+
+//timeline bar
+function navigateToPage(page) {
+    window.location.href = page;  // This will navigate to the specified page.
+}

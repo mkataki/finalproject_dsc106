@@ -12,7 +12,6 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 });
 
-
 // Function to remove duplicates by ID
 function removeDuplicatesByID(data) {
     const uniqueData = [];
@@ -27,12 +26,11 @@ function removeDuplicatesByID(data) {
 
     return uniqueData;
 }
+
 function updateSpeedLabel() {
     let speed = document.getElementById("speed").value;
     document.getElementById("speedValue").textContent = speed + " km/h";
 }
-
-
 
 // Load CSV file using D3.js
 d3.csv("dataclean.csv", function(row) {
@@ -54,9 +52,9 @@ d3.csv("dataclean.csv", function(row) {
     alert("Failed to load CSV file. Please check the console for details.");
 });
 
-// Updated Logarithmic Regression coefficients from Python
+// Logarithmic Regression coefficients
 const logCoefficients = {
-    w0: 301.31015653243117,  // Intercept
+    w0: 301.31015653243117,  
     height: -65.773440,
     weight: 18.843343,
     age: -19.021465,
@@ -67,16 +65,16 @@ const logCoefficients = {
 
 // Function to apply logarithmic transformation
 function logTransform(value) {
-    return Math.log1p(value);  // log(1 + x) to avoid log(0) issues
+    return Math.log1p(value);
 }
 
 function predictHeartRate() {
     const height = parseFloat(document.getElementById("height").value);
     const weight = parseFloat(document.getElementById("weight").value);
     const age = parseInt(document.getElementById("age").value);
-    const sex = parseInt(document.getElementById("gender").value); // Male = 0, Female = 1
+    const sex = parseInt(document.getElementById("gender").value);
     const speed = parseFloat(document.getElementById("speed").value);
-    const time = parseFloat(document.getElementById("time").value);
+    const time = parseFloat(document.getElementById("time").value) * 60;
 
     // Apply log transformation
     const logHeight = logTransform(height);
@@ -85,41 +83,43 @@ function predictHeartRate() {
     const logSpeed = logTransform(speed);
     const logTime = logTransform(time);
 
-    // Predict HR using the Logarithmic Ridge Regression model
+    // Predict HR
     let estimatedHR = 
         logCoefficients.w0 +
         (logCoefficients.height * logHeight) +
         (logCoefficients.weight * logWeight) +
         (logCoefficients.age * logAge) +
-        (logCoefficients.sex * sex) +  // No log for categorical variable
+        (logCoefficients.sex * sex) +
         (logCoefficients.speed * logSpeed) +
         (logCoefficients.time * logTime);
 
-    // **Apply Hard-Coded Speed Adjustments**
+    // Adjust HR based on speed
     if (speed < 8) {
-        estimatedHR *= 0.65;  // Reduce HR for walking speeds
+        estimatedHR *= 0.65;
     } else if (speed >= 8 && speed <= 12) {
-        estimatedHR *= 0.85;  // Reduce HR slightly for jogging speeds
+        estimatedHR *= 0.85;
     }
-    // Speeds > 12 km/h remain unchanged
 
-    // Ensure HR is within a reasonable range (40-220 bpm)
     estimatedHR = Math.max(40, Math.min(Math.round(estimatedHR), 220));
 
-    // Display predicted HR
     document.getElementById("predictedHR").textContent = estimatedHR + " bpm";
-
-    // Assign heart rate zones dynamically
     assignHeartRateZone(estimatedHR, age);
 }
 
+// Attach event listeners
+function attachInputListeners() {
+    const inputs = ["height", "weight", "age", "gender", "speed", "time"];
+    inputs.forEach(id => {
+        document.getElementById(id).addEventListener("input", predictHeartRate);
+    });
+}
+document.addEventListener("DOMContentLoaded", attachInputListeners);
 
-// Function to determine HR zone dynamically based on Max HR formula
 function assignHeartRateZone(hr, age) {
-    let maxHR = 220 - age; // Standard Max HR formula
+    let maxHR = 220 - age;
     let percentageHR = (hr / maxHR) * 100;
-
     let zone = "";
+
     if (percentageHR < 60) zone = "zone1";
     else if (percentageHR < 70) zone = "zone2";
     else if (percentageHR < 80) zone = "zone3";
@@ -130,95 +130,122 @@ function assignHeartRateZone(hr, age) {
     highlightZone(zone);
 }
 
-// Function to highlight the correct HR zone
 function highlightZone(activeZone) {
     const zones = document.querySelectorAll(".zone");
     const descriptions = document.querySelectorAll(".zone-info");
 
     zones.forEach(zone => {
-        if (zone.id === activeZone) {
-            zone.classList.add("highlight");
-        } else {
-            zone.classList.remove("highlight");
-        }
+        zone.classList.toggle("highlight", zone.id === activeZone);
     });
 
     descriptions.forEach(desc => {
-        if (desc.id === `info-${activeZone}`) {
-            desc.style.display = "block";
-        } else {
-            desc.style.display = "none";
-        }
+        desc.style.display = desc.id === `info-${activeZone}` ? "block" : "none";
     });
 }
 
-// Automatically update HR and zones when speed slider changes
-document.getElementById("speed").addEventListener("input", function () {
+// Mario GIF handling
+let marioGif = document.getElementById("marioGif");
+let speedSlider = document.getElementById("speed");
+let spriteWidth = 100;  // Width of one frame of the sprite
+let totalFrames = 10;   // Total number of frames in the sprite sheet
+let currentFrameIndex = 0;  // Index to track the current frame (from 0 to totalFrames-1)
+let animationPaused = false;   // To track if the animation is paused
+let sliderSpeedValue = parseFloat(speedSlider.value); // Store the speed value at the moment the slider is released
+
+// Function to update the sprite position based on the current frame index
+function updateSpritePosition() {
+    let framePosition = currentFrameIndex * spriteWidth;
+    marioGif.style.backgroundPosition = `-${framePosition}px 0px`;
+}
+
+// Pause the animation during the slider drag and freeze the sprite position
+speedSlider.addEventListener("mousedown", function () {
+    animationPaused = true;
+    marioGif.style.animationPlayState = "paused";  // Pause the animation
+    currentFrameIndex = getCurrentFrameIndex(); // Save current frame index
+});
+
+// For touch devices
+speedSlider.addEventListener("touchstart", function () {
+    animationPaused = true;
+    marioGif.style.animationPlayState = "paused";  // Pause the animation
+    currentFrameIndex = getCurrentFrameIndex(); // Save current frame index
+});
+
+// During slider input, freeze sprite position without updating background position
+speedSlider.addEventListener("input", function () {
+    updateSpeedLabel();
+    predictHeartRate();
+    // Keep the sprite frozen while the slider is being dragged (do not update position)
+    if (!animationPaused) {
+        currentFrameIndex = getCurrentFrameIndex();
+    }
+});
+
+// Get the current frame index based on background-position
+function getCurrentFrameIndex() {
+    let computedStyle = getComputedStyle(marioGif);
+    let backgroundPosition = computedStyle.backgroundPosition.split(' ');
+    let currentPosition = parseInt(backgroundPosition[0].replace('px', ''), 10);
+    return Math.abs(currentPosition) / spriteWidth;  // Convert pixel position to frame index
+}
+
+// Resume the animation on slider release with updated speed
+function resumeAnimation() {
+    if (animationPaused) {
+        // Get the speed from the slider when released
+        sliderSpeedValue = parseFloat(speedSlider.value);  // Store the current slider value
+
+        // Calculate the new duration based on the slider's speed value
+        let newDuration = 9 - (sliderSpeedValue - 3) * 0.2;
+
+        // Set the new animation duration based on the updated speed
+        marioGif.style.animation = `run-animation ${newDuration}s infinite linear`;
+        marioGif.style.animationPlayState = "running";  // Resume the animation
+
+        // Update the sprite position to the last paused frame index
+        updateSpritePosition();
+
+        // Reset animation paused state
+        animationPaused = false;
+    }
+}
+
+// Listen for slider release events to resume the animation
+speedSlider.addEventListener("mouseup", function () {
+    resumeAnimation();
+});
+
+// For touch devices
+speedSlider.addEventListener("touchend", function () {
+    resumeAnimation();
+});
+
+// Update the speed label dynamically as the user drags the slider
+speedSlider.addEventListener("input", function () {
     updateSpeedLabel();
     predictHeartRate();
 });
 
-// Function to update speed label dynamically
+// Update speed label
 function updateSpeedLabel() {
     let speed = document.getElementById("speed").value;
     document.getElementById("speedValue").textContent = speed + " km/h";
 }
 
-
-// Keep track of the running state
-let lastSpeed = 5;
-let marioGif = document.getElementById("marioGif");
-
-// Function to smoothly update animation speed without restarting
-document.getElementById("speed").addEventListener("input", function () {
-    let speed = parseFloat(this.value);
-
-    if (speed !== lastSpeed) { 
-        let newDuration = 8 - (speed - 3) * 0.5;
-        marioGif.style.animationDuration = `${newDuration}s`;
-    }
-
-    lastSpeed = speed;
-    document.getElementById("speedValue").textContent = speed + " km/h";
-});
-
-// Function to update Mario/Peach based on gender selection
+// Update Mario/Peach GIF based on gender selection
 document.getElementById("gender").addEventListener("change", function () {
-    if (this.value === "1") {
-        marioGif.src = "peach.gif";
-        marioGif.style.transform = "scaleX(-1)";
-    } else {
-        marioGif.src = "mario.gif";
-        marioGif.style.transform = "scaleX(1)";
+    if (this.value === "1") { 
+        marioGif.src = "peach.gif"; 
+        marioGif.style.transform = "scaleX(-1)"; 
+    } else { 
+        marioGif.src = "mario.gif"; 
+        marioGif.style.transform = "scaleX(1)"; 
     }
 });
 
-// Automatically update HR and zones when speed slider changes
-document.getElementById("speed").addEventListener("input", function () {
-    updateSpeedLabel();
-    predictHeartRate();
-});
 
-// Function to update animation speed based on slider
-document.getElementById("speed").addEventListener("input", function () {
-    let speed = parseFloat(this.value);
-    let animationSpeed = 6 - (speed - 3) * 0.2; // Adjusting speed dynamically
-
-    let marioGif = document.getElementById("marioGif");
-    marioGif.style.animation = `run-animation ${animationSpeed}s infinite linear`;
-
-    document.getElementById("speedValue").textContent = speed + " km/h";
-});
-
-// Function to update Mario/Peach based on gender selection
-document.getElementById("gender").addEventListener("change", function () {
-    let marioGif = document.getElementById("marioGif");
-
-    if (this.value === "1") { // Female selected
-        marioGif.src = "peach.gif"; // Change to Peach
-        marioGif.style.transform = "scaleX(-1)"; // Flip horizontally
-    } else { // Male selected
-        marioGif.src = "mario.gif"; // Change back to Mario
-        marioGif.style.transform = "scaleX(1)"; // Restore normal orientation
-    }
-});
+//timeline bar
+function navigateToPage(page) {
+    window.location.href = page;  // This will navigate to the specified page.
+}

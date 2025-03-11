@@ -43,7 +43,7 @@ document.addEventListener("DOMContentLoaded", function () {
             }
 
             // Change Mario's speed
-            let animationSpeed = Math.max(2, 12 - speed); 
+            let animationSpeed = Math.max(2, 16 - speed); 
             marioGif.style.animation = `run-animation ${animationSpeed}s infinite linear`;
 
             // Highlight the selected zone
@@ -61,3 +61,8 @@ document.addEventListener("DOMContentLoaded", function () {
         window.location.href = "scenario.html"; // Navigate to scenario page
     });
 });
+
+//timeline bar
+function navigateToPage(page) {
+    window.location.href = page;  // This will navigate to the specified page.
+}

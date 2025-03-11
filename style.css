@@ -1,8 +1,14 @@
 body {
     font-family: Arial, sans-serif;
     text-align: center;
+    margin: 0;
+    padding: 0;
+    background-color: white; /* Solid white background */
+    color: #333; /* Dark text color for readability */
+    line-height: 1.6; /* Improved line height for better readability */
 }
 
+/* --- CONTAINER --- */
 .container {
     max-width: 800px;
     margin: 0 auto;
@@ -11,6 +17,209 @@ body {
 
 h1, h2 {
     margin-bottom: 10px;
+}
+
+/* --- INTRO SCREEN --- */
+#intro-screen {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    background-color: white; /* Solid white background to match Mario gif */
+    position: absolute;
+    width: 100%;
+    top: 0;
+    left: 0;
+    transition: opacity 1s ease-in-out; /* Smooth fade transition */
+    padding: 0 20px;
+    box-sizing: border-box;
+}
+
+/* Mario Animation */
+#intro-mario {
+    width: 180px; /* Slightly bigger for better visibility */
+    animation: bounce 1s infinite ease-in-out;
+}
+
+@keyframes bounce {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+}
+
+/* --- INTRO SCREEN TEXT --- */
+#intro-screen h1 {
+    font-family: 'Roboto', sans-serif;
+    font-size: 2rem;
+    color: #333;
+    margin-bottom: 15px;
+}
+
+#intro-screen p {
+    font-family: 'Arial', sans-serif;
+    font-size: 1.2rem;
+    color: #555;
+    line-height: 1.6;
+    text-align: center;
+    max-width: 750px;
+    margin: 20px auto;
+    padding: 0 15px;
+    background-color: rgba(255, 255, 255, 0.9); /* Light background with some transparency */
+    border-radius: 8px; /* Rounded corners */
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1); /* Soft shadow for depth */
+}
+
+/* Wrap the next button in a container */
+#next-button-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    margin-top: 20px; /* Optional: adjust the space above */
+}
+
+
+/* --- BUTTON STYLES --- */
+#start-button,
+#next-button {
+    padding: 14px 25px;
+    font-size: 18px;
+    background-color: #ffcc00;
+    border: none;
+    cursor: pointer;
+    margin-top: 25px;
+    border-radius: 5px; /* Rounded corners */
+    color: white;
+    transition: background-color 0.3s ease-in-out, transform 0.2s ease; /* Hover effect */
+}
+
+/* Button Hover Effect */
+#start-button:hover,
+#next-button:hover {
+    background-color: #e6b800; /* Slightly darker yellow */
+    transform: scale(1.05); /* Slight scale-up effect */
+}
+
+/* Fade-out effect when transitioning */
+.fade-out {
+    opacity: 0;
+    transition: opacity 1s ease-in-out;
+}
+
+/* Hidden element for transitions */
+.hidden {
+    display: none;
+}
+
+/* --- MAX HR SCREEN --- */
+#maxhr-screen {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    padding: 20px;
+    box-sizing: border-box;
+    text-align: center;
+}
+
+/* Header Styles */
+#maxhr-screen h1 {
+    font-size: 2.5rem;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+/* Subheader (HR Max Formula) */
+#maxhr-screen h2 {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #2c3e50; /* Dark blue for the formula */
+    margin: 20px 0;
+}
+
+/* Paragraph Styling */
+#maxhr-screen p {
+    font-size: 1.1rem;
+    color: #555;
+    max-width: 800px;
+    margin: 15px auto;
+    padding: 0 15px;
+    background-color: rgba(255, 255, 255, 0.9); /* Light background with transparency */
+    border-radius: 8px;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* --- Button Styling --- */
+#next-button {
+    padding: 14px 25px;
+    font-size: 18px;
+    background-color: #ffcc00;
+    border: none;
+    cursor: pointer;
+    margin-top: 25px;
+    border-radius: 5px;
+    color: white;
+    transition: background-color 0.3s ease-in-out, transform 0.2s ease;
+}
+
+/* Button Hover Effect */
+#next-button:hover {
+    background-color: #e6b800; /* Slightly darker yellow */
+    transform: scale(1.05);
+}
+
+/* --- Timeline Section --- */
+#timeline {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background-color: #f4f4f4;
+    padding: 10px 0;
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    overflow-x: auto;  /* Allow horizontal scrolling if content overflows */
+    overflow-y: auto; /* Disable vertical scrolling */
+    white-space: nowrap; /* Prevent line breaks, keeping buttons in a single row */
+    box-sizing: border-box; /* Ensure padding is included in total width calculation */
+}
+
+.timeline-button {
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    text-align: center;
+    font-size: 12px;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: background-color 0.3s;
+}
+
+.timeline-button:hover {
+    background-color: #45a049;
+}
+
+/* --- Responsive Design --- */
+@media (max-width: 768px) {
+    #maxhr-screen h1 {
+        font-size: 2rem; /* Slightly smaller font for mobile */
+    }
+
+    #maxhr-screen h2 {
+        font-size: 1.2rem; /* Smaller font for the formula on mobile */
+    }
+
+    #next-button {
+        padding: 12px 20px; /* Slightly smaller button on mobile */
+    }
+
+    .timeline-button {
+        font-size: 14px; /* Smaller buttons on mobile */
+        padding: 10px 20px;
+    }
 }
 
 /* Speed Slider */
@@ -38,12 +247,17 @@ h1, h2 {
     100% { left: 100vw; }
 }
 
-
-
 /* BPM Info */
 #bpm-info {
-    margin-top: 20px;
+    margin-top:auto; /* Reduced margin-top to move it up */
+    font-size: 1rem; /* Slightly smaller font size */
 }
+
+/* Update the bpm-info span for font size */
+#bpm-info h2 {
+    font-size: 1.2rem; /* Slightly smaller font for the heart rate and zone info */
+}
+
 
 /* Heart Rate Zones */
 #zones {
@@ -92,144 +306,87 @@ h1, h2 {
 .zone.highlight + .zone-info {
     display: block;
 }
-/* --- INTRO SCREEN --- */
-#intro-screen {
+
+/* --- YOUR TURN SCREEN --- */
+#yourturn-screen {
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     height: 100vh;
-    background-color: white;
+    background-color: white; /* Same white background as intro screen */
     position: absolute;
     width: 100%;
     top: 0;
     left: 0;
-    transition: opacity 1s;
+    transition: opacity 1s ease-in-out; /* Smooth fade transition */
+    padding: 0 20px;
+    box-sizing: border-box;
 }
 
-#intro-mario {
-    width: 150px;
-    animation: bounce 1s infinite;
+/* Title for yourturn section */
+#yourturn-screen h1 {
+    font-family: 'Roboto', sans-serif;
+    font-size: 2rem;
+    color: #333;
+    margin-bottom: 15px;
 }
 
-@keyframes bounce {
-    0%, 100% { transform: translateY(0); }
-    50% { transform: translateY(-10px); }
+/* Text within yourturn screen */
+#yourturn-screen p {
+    font-family: 'Arial', sans-serif;
+    font-size: 1.2rem;
+    color: #555;
+    line-height: 1.6;
+    text-align: center;
+    max-width: 750px;
+    margin: 20px auto;
+    padding: 0 15px;
+    background-color: rgba(255, 255, 255, 0.9); /* Same background style */
+    border-radius: 8px; /* Rounded corners */
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1); /* Soft shadow for depth */
 }
 
-#start-button {
-    padding: 12px 20px;
+/* Wrap the next button in a container */
+#yourturn-next-button-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    margin-top: 20px;
+    margin: 0 auto;
+}
+
+/* --- BUTTON STYLES --- */
+#yourturn-start-button,
+#yourturn-next-button {
+    padding: 14px 25px;
     font-size: 18px;
     background-color: #ffcc00;
     border: none;
     cursor: pointer;
-    margin-top: 20px;
+    margin-top: 25px;
+    border-radius: 5px; /* Rounded corners */
+    color: white;
+    transition: background-color 0.3s ease-in-out, transform 0.2s ease; /* Hover effect */
 }
-#next-button {
-    padding: 12px 20px;
-    font-size: 18px;
-    background-color: #ffcc00;
-    border: none;
-    cursor: pointer;
-    margin-top: 20px;
+
+/* Button Hover Effect */
+#yourturn-start-button:hover,
+#yourturn-next-button:hover {
+    background-color: #e6b800; /* Slightly darker yellow */
+    transform: scale(1.05); /* Slight scale-up effect */
 }
 
 /* Fade-out effect when transitioning */
 .fade-out {
     opacity: 0;
+    transition: opacity 1s ease-in-out;
 }
+
+/* Hidden element for transitions */
 .hidden {
     display: none;
-}
-
-#scenario-screen {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    height: 100vh;
-    background-color: white;
-    position: absolute;
-    width: 100%;
-    top: 0;
-    left: 0;
-    transition: opacity 1s;
-}
-
-.fade-out {
-    opacity: 0;
-}
-.fade-in {
-    opacity: 1;
-}
-
-#zone-explanation {
-    text-align: center;
-    margin: 20px;
-}
-
-#zones {
-    display: flex;
-    justify-content: center;
-    gap: 10px;
-    margin-top: 20px;
-}
-
-.zone {
-    padding: 15px;
-    border-radius: 10px;
-    font-weight: bold;
-    text-align: center;
-    flex: 1;
-    cursor: pointer;
-}
-
-.zone1 { background-color: yellow; }
-.zone2 { background-color: lightgreen; }
-.zone3 { background-color: lightblue; }
-.zone4 { background-color: violet; }
-.zone5 { background-color: tomato; }
-
-.zone:hover {
-    opacity: 0.8;
-}
-
-.highlight {
-    border: 2px solid black;
-    opacity: 1;
-}
-
-#zone-info {
-    margin-top: 20px;
-}
-
-#continue-button {
-    margin-top: 20px;
-    padding: 10px 20px;
-    font-size: 16px;
-    background-color: #ffcc00;
-    border: none;
-    cursor: pointer;
-}
-
-#mario-container {
-    position: relative;
-    width: 100vw;
-    height: 150px;
-    overflow: hidden;
-    margin-top: 20px;
-}
-
-#marioGif {
-    position: absolute;
-    width: 100px;
-    left: -100px;
-    animation: run-animation 5s linear infinite;
-}
-
-@keyframes run-animation {
-    0% { left: -100px; }
-    100% { left: 100vw; }
 }
 
 /* Ensure Peach starts from the left */
@@ -258,5 +415,3 @@ h1, h2 {
     0% { left: -100px; }
     100% { left: 100vw; }
 }
-
-
