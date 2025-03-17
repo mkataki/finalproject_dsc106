@@ -18,6 +18,48 @@ body {
 h1, h2 {
     margin-bottom: 10px;
 }
+@font-face {
+    font-family: 'MarioFont';
+    src: url('./SuperMarioGalaxy.woff2') format('woff2'),
+         url('./SuperMarioGalaxy.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+h1, #mario-header, #heart-header, #yourturn-header, #mario-training-header, #peach-training-header {
+    font-family: 'MarioFont', sans-serif !important;
+}
+
+#intro-screen h1 {
+    font-family: 'MarioFont', sans-serif;
+    font-size: 4rem; /* Bigger text */
+    font-weight: bold;
+    text-transform: uppercase;
+    text-align: center;
+    display: flex; /* Use flexbox to align letters properly */
+    justify-content: center;
+    gap: 10px;
+
+    
+    /* Add a strong black outline */
+    text-shadow: 
+        -6px -6px 0px #000000,  
+         6px -6px 0px #000000,
+        -6px  6px 0px #000000,
+         6px  6px 0px #000000,
+         0px  0px 12px rgba(0, 0, 0, 0.5); /* Soft glow */
+}
+
+
+
+/* Super Mario Colors - Each letter */
+#intro-screen h1 span:nth-child(1) { color: #049cd8; } /* Blue */
+#intro-screen h1 span:nth-child(2) { color: #e52521; } /* Red */
+#intro-screen h1 span:nth-child(3) { color: #fbd000; } /* Yellow */
+#intro-screen h1 span:nth-child(4) { color: #43b047; } /* Green */
+#intro-screen h1 span:nth-child(5) { color: #e52521; } /* Red */
+#intro-screen h1 span:nth-child(6) { color: #049cd8; } /* Blue */
+
 
 /* --- INTRO SCREEN --- */
 #intro-screen {
@@ -45,14 +87,6 @@ h1, h2 {
 @keyframes bounce {
     0%, 100% { transform: translateY(0); }
     50% { transform: translateY(-10px); }
-}
-
-/* --- INTRO SCREEN TEXT --- */
-#intro-screen h1 {
-    font-family: 'Roboto', sans-serif;
-    font-size: 2rem;
-    color: #333;
-    margin-bottom: 15px;
 }
 
 #intro-screen p {
@@ -201,6 +235,71 @@ h1, h2 {
 .timeline-button:hover {
     background-color: #45a049;
 }
+#mario-header {
+    font-family: 'MarioFont', sans-serif;
+    font-size: 3rem;
+    font-weight: bold;
+    text-transform: uppercase;
+    text-align: center;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 7px;
+    
+    /* Strong black outline */
+    text-shadow: 
+        -6px -6px 0px #000000,  
+         6px -6px 0px #000000,
+        -6px  6px 0px #000000,
+         6px  6px 0px #000000,
+         0px  0px 12px rgba(0, 0, 0, 0.5); /* Soft glow */
+}
+
+/* Apply Super Mario colors to each letter */
+#mario-header span:nth-child(1) { color: #049cd8; } /* Blue */
+#mario-header span:nth-child(2) { color: #e52521; } /* Red */
+#mario-header span:nth-child(3) { color: #fbd000; } /* Yellow */
+#mario-header span:nth-child(4) { color: #43b047; } /* Green */
+#mario-header span:nth-child(5) { color: #e52521; } /* Red */
+#mario-header span:nth-child(6) { color: #049cd8; } /* Blue */
+#mario-header span:nth-child(7) { color: #fbd000; } /* Yellow */
+#mario-header span:nth-child(8) { color: #43b047; } /* Green */
+#mario-header span:nth-child(9) { color: #e52521; } /* Red */
+#mario-header span:nth-child(10) { color: #049cd8; } /* Blue */
+#mario-header span:nth-child(11) { color: #fbd000; } /* Yellow */
+
+/* Spaces should not have color */
+#mario-header span:nth-child(12),
+#mario-header span:nth-child(20),
+#mario-header span:nth-child(26) { 
+    width: 10px;
+}
+
+/* Continue coloring for the rest of the letters */
+#mario-header span:nth-child(13) { color: #43b047; } /* Green */
+#mario-header span:nth-child(14) { color: #e52521; } /* Red */
+#mario-header span:nth-child(15) { color: #049cd8; } /* Blue */
+#mario-header span:nth-child(16) { color: #fbd000; } /* Yellow */
+#mario-header span:nth-child(17) { color: #43b047; } /* Green */
+#mario-header span:nth-child(18) { color: #e52521; } /* Red */
+#mario-header span:nth-child(19) { color: #049cd8; } /* Blue */
+
+/* Heart Rate */
+#mario-header span:nth-child(21) { color: #fbd000; } /* Yellow */
+#mario-header span:nth-child(22) { color: #43b047; } /* Green */
+#mario-header span:nth-child(23) { color: #e52521; } /* Red */
+#mario-header span:nth-child(24) { color: #049cd8; } /* Blue */
+#mario-header span:nth-child(25) { color: #fbd000; } /* Yellow */
+
+#mario-header span:nth-child(26) { color: #fbd000; } /* Yellow */
+#mario-header span:nth-child(27) { color: #43b047; } /* Green */
+#mario-header span:nth-child(28) { color: #e52521; } /* Red */
+#mario-header span:nth-child(29) { color: #049cd8; } /* Blue */
+#mario-header span:nth-child(30) { color: #fbd000; } /* Yellow */
+#mario-header span:nth-child(31) { color: #43b047; } /* Green */
+#mario-header span:nth-child(33) { color: #049cd8; } /* Blue */
+
+
 
 /* --- Responsive Design --- */
 @media (max-width: 768px) {
@@ -221,6 +320,8 @@ h1, h2 {
         padding: 10px 20px;
     }
 }
+
+
 
 /* Speed Slider */
 #speed-container {
@@ -246,6 +347,7 @@ h1, h2 {
     0% { left: -100px; }
     100% { left: 100vw; }
 }
+
 
 /* BPM Info */
 #bpm-info {
@@ -414,4 +516,227 @@ h1, h2 {
 @keyframes run-animation {
     0% { left: -100px; }
     100% { left: 100vw; }
+}
+#heart-header {
+    font-family: 'MarioFont', sans-serif;
+    font-size: 3rem;
+    font-weight: bold;
+    text-transform: uppercase;
+    text-align: center;
+    margin-top: 20px;
+    display: flex;
+    justify-content: center;
+    gap: 10px; /* Adjust spacing between letters */
+}
+
+/* Black Outline to Mimic Mario Logo */
+#heart-header span {
+    text-shadow: 
+        -4px -4px 0px black,  
+         4px -4px 0px black,
+        -4px  4px 0px black,
+         4px  4px 0px black;
+}
+
+/* Mario Colors */
+#heart-header span:nth-child(1) { color: #049cd8; } /* H - Blue */
+#heart-header span:nth-child(2) { color: #e52521; } /* E - Red */
+#heart-header span:nth-child(3) { color: #fbd000; } /* A - Yellow */
+#heart-header span:nth-child(4) { color: #43b047; } /* R - Green */
+#heart-header span:nth-child(5) { color: #e52521; } /* T - Red */
+#heart-header span:nth-child(8) { color: #fbd000; } /* R - Yellow */
+#heart-header span:nth-child(9) { color: #049cd8; } /* A - Blue */
+#heart-header span:nth-child(10) { color: #e52521; } /* T - Red */
+#heart-header span:nth-child(11) { color: #43b047; } /* E - Green */
+#heart-header span:nth-child(12) { color: #e52521; } /* Z - Red */
+#heart-header span:nth-child(13) { color: #049cd8; } /* O - Blue */
+#heart-header span:nth-child(14) { color: #fbd000; } /* N - Yellow */
+#heart-header span:nth-child(15) { color: #43b047; } /* E - Green */
+#heart-header span:nth-child(16) { color: #e52521; } /* S - Red */
+#heart-header span:nth-child(17) { color: #fbd000; } /* A - Yellow */
+#heart-header span:nth-child(18) { color: #43b047; } /* R - Green */
+#mario-training-header {
+    font-family: 'MarioFont', sans-serif;
+    font-size: 3rem;
+    font-weight: bold;
+    text-transform: uppercase;
+    text-align: center;
+    margin-top: 20px;
+    display: flex;
+    justify-content: center;
+    gap: 10px; /* Adjust spacing between letters */
+}
+
+/* Black Outline to Mimic Mario Logo */
+#mario-training-header span {
+    text-shadow: 
+        -4px -4px 0px black,  
+         4px -4px 0px black,
+        -4px  4px 0px black,
+         4px  4px 0px black;
+}
+
+/* Mario Colors */
+#mario-training-header span:nth-child(1) { color: #e52521; } /* M - Red */
+#mario-training-header span:nth-child(2) { color: #fbd000; } /* A - Yellow */
+#mario-training-header span:nth-child(3) { color: #43b047; } /* R - Green */
+#mario-training-header span:nth-child(4) { color: #049cd8; } /* I - Blue */
+#mario-training-header span:nth-child(5) { color: #e52521; } /* O - Red */
+#mario-training-header span:nth-child(6) { color: black; } /* Apostrophe */
+#mario-training-header span:nth-child(7) { color: #fbd000; } /* S - Yellow */
+
+#mario-training-header span:nth-child(9) { color: #43b047; } /* T - Green */
+#mario-training-header span:nth-child(10) { color: #049cd8; } /* R - Blue */
+#mario-training-header span:nth-child(11) { color: #e52521; } /* A - Red */
+#mario-training-header span:nth-child(12) { color: #fbd000; } /* I - Yellow */
+#mario-training-header span:nth-child(13) { color: #43b047; } /* N - Green */
+#mario-training-header span:nth-child(14) { color: #049cd8; } /* I - Blue */
+#mario-training-header span:nth-child(15) { color: #e52521; } /* N - Red */
+#mario-training-header span:nth-child(16) { color: #fbd000; } /* G - Yellow */
+#mario-training-header span:nth-child(17) { color: #049cd8; } /* A - Red */
+#mario-training-header span:nth-child(18) { color: #43b047; } /* P - Green */
+#mario-training-header span:nth-child(19) { color: #049cd8; } /* L - Blue */
+#mario-training-header span:nth-child(20) { color: #e52521; } /* A - Red */
+#mario-training-header span:nth-child(21) { color: #fbd000; } /* N - Yellow */
+#mario-training-header span:nth-child(22) { color: #43b047; } /* N - Green */
+#mario-training-header span:nth-child(23) { color: #049cd8; } /* I - Blue */
+#mario-training-header span:nth-child(24) { color: #e52521; } /* N - Red */
+
+#peach-training-header {
+    font-family: 'MarioFont', sans-serif;
+    font-size: 3rem;
+    font-weight: bold;
+    text-transform: uppercase;
+    text-align: center;
+    margin-top: 20px;
+    display: flex;
+    justify-content: center;
+    gap: 10px; /* Adjust spacing between letters */
+}
+
+/* Black Outline to Mimic Mario Logo */
+#peach-training-header span {
+    text-shadow: 
+        -4px -4px 0px black,  
+         4px -4px 0px black,
+        -4px  4px 0px black,
+         4px  4px 0px black;
+}
+
+/* Mario Colors with a Peach Twist */
+#peach-training-header span:nth-child(1) { color: #e52521; } /* P - Red */
+#peach-training-header span:nth-child(2) { color: #fbd000; } /* E - Yellow */
+#peach-training-header span:nth-child(3) { color: #43b047; } /* A - Green */
+#peach-training-header span:nth-child(4) { color: #049cd8; } /* C - Blue */
+#peach-training-header span:nth-child(5) { color: #ff69b4; } /* H - Pink (Peach's Dress Color) */
+#peach-training-header span:nth-child(6) { color: black; } /* Apostrophe */
+#peach-training-header span:nth-child(7) { color: #fbd000; } /* S - Yellow */
+#peach-training-header span:nth-child(9) { color: #43b047; } /* T - Green */
+#peach-training-header span:nth-child(10) { color: #049cd8; } /* R - Blue */
+#peach-training-header span:nth-child(11) { color: #e52521; } /* A - Red */
+#peach-training-header span:nth-child(12) { color: #fbd000; } /* I - Yellow */
+#peach-training-header span:nth-child(13) { color: #43b047; } /* N - Green */
+#peach-training-header span:nth-child(14) { color: #049cd8; } /* I - Blue */
+#peach-training-header span:nth-child(15) { color: #ff69b4; } /* N - Pink */
+#peach-training-header span:nth-child(16) { color: #fbd000; } /* G - Yellow */
+#peach-training-header span:nth-child(17) { color: #43b047;; } 
+#peach-training-header span:nth-child(18) { color: #43b047; } /* P - Green */
+#peach-training-header span:nth-child(19) { color: #049cd8; } /* L - Blue */
+#peach-training-header span:nth-child(20) { color: #e52521; } /* A - Red */
+#peach-training-header span:nth-child(21) { color: #fbd000; } /* N - Yellow */
+#peach-training-header span:nth-child(22) { color: #ff69b4; }
+#peach-training-header span:nth-child(23) { color: #049cd8; }
+
+#yourturn-header {
+    font-family: 'MarioFont', sans-serif;
+    font-size: 4.5rem;  /* Increase this for bigger text */
+    font-weight: bold;
+    text-transform: uppercase;
+    text-align: center;
+    margin-top: 20px;
+    display: flex;
+    justify-content: center;
+    gap: 5px; /* Adjust spacing between letters */
+}
+
+/* Add a space between words */
+#yourturn-header .space {
+    width: 20px;
+}
+
+/* Mario Outline */
+#yourturn-header span {
+    text-shadow: 
+        -4px -4px 0px black,  
+         4px -4px 0px black,
+        -4px  4px 0px black,
+         4px  4px 0px black;
+}
+
+/* Mario Colors */
+#yourturn-header span:nth-child(1) { color: #e52521; } /* N - Red */
+#yourturn-header span:nth-child(2) { color: #fbd000; } /* O - Yellow */
+#yourturn-header span:nth-child(3) { color: #43b047; } /* W - Green */
+#yourturn-header span:nth-child(4) { color: black; } /* Space */
+#yourturn-header span:nth-child(5) { color: #049cd8; } /* I - Blue */
+#yourturn-header span:nth-child(6) { color: #e52521; } /* T - Red */
+#yourturn-header span:nth-child(7) { color: black; } /* Apostrophe */
+#yourturn-header span:nth-child(8) { color: #fbd000; } /* S - Yellow */
+#yourturn-header span:nth-child(9) { color: black; } /* Space */
+#yourturn-header span:nth-child(10) { color: #43b047; } /* Y - Green */
+#yourturn-header span:nth-child(11) { color: #049cd8; } /* O - Blue */
+#yourturn-header span:nth-child(12) { color: #e52521; } /* U - Red */
+#yourturn-header span:nth-child(13) { color: #fbd000; } /* R - Yellow */
+#yourturn-header span:nth-child(14) { color: black; } /* Space */
+#yourturn-header span:nth-child(15) { color: #43b047; } /* T - Green */
+#yourturn-header span:nth-child(16) { color: #049cd8; } /* U - Blue */
+#yourturn-header span:nth-child(17) { color: #e52521; } /* R - Red */
+#yourturn-header span:nth-child(18) { color: #fbd000; } /* N - Yellow */
+
+#tracker-header {
+    font-family: 'MarioFont', sans-serif;
+    font-weight: bold;
+    text-transform: uppercase;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 10px;
+    
+    /* Thicker outline */
+    text-shadow: 
+        -4px -4px 0px black,  
+         4px -4px 0px black,
+        -4px  4px 0px black,
+         4px  4px 0px black,
+        -2px -2px 0px black,  
+         2px -2px 0px black,
+        -2px  2px 0px black,
+         2px  2px 0px black,
+         0px  0px 10px rgba(0, 0, 0, 0.5); /* Glow effect */
+}
+
+
+/* Apply Super Mario colors to each letter */
+#tracker-header span:nth-child(1) { color: #e52521; } /* Y - Red */
+#tracker-header span:nth-child(2) { color: #fbd000; } /* O - Yellow */
+#tracker-header span:nth-child(3) { color: #43b047; } /* U - Green */
+#tracker-header span:nth-child(4) { color: #049cd8; } /* R - Blue */
+#tracker-header span:nth-child(6) { color: #e52521; } /* T - Red */
+#tracker-header span:nth-child(7) { color: #fbd000; } /* R - Yellow */
+#tracker-header span:nth-child(8) { color: #43b047; } /* A - Green */
+#tracker-header span:nth-child(9) { color: #049cd8; } /* I - Blue */
+#tracker-header span:nth-child(10) { color: #e52521; } /* N - Red */
+#tracker-header span:nth-child(11) { color: #fbd000; } /* I - Yellow */
+#tracker-header span:nth-child(12) { color: #43b047; } /* N - Green */
+#tracker-header span:nth-child(13) { color: #049cd8; } /* G - Blue */
+
+#tracker-header span:nth-child(15) { color: #e52521; } /* P - Red */
+#tracker-header span:nth-child(16) { color: #fbd000; } /* L - Yellow */
+#tracker-header span:nth-child(17) { color: #43b047; } /* A - Green */
+#tracker-header span:nth-child(18) { color: #049cd8; } /* N - Blue */
+
+/* Add spacing for spaces */
+#tracker-header .space {
+    width: 20px;
 }
