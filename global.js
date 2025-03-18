@@ -11,6 +11,58 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     }
 });
+let isMetric = true; // Default to metric
+document.addEventListener("DOMContentLoaded", function () {
+    const toggleButton = document.getElementById("toggle-button");
+    const heightInput = document.getElementById("height");
+    const weightInput = document.getElementById("weight");
+    
+
+    // Function to update the button text
+    function updateToggleButtonText() {
+        toggleButton.textContent = isMetric ? "Switch to Customary" : "Switch to Metric";
+    }
+
+    // Function to update placeholders based on unit system
+    function updatePlaceholders() {
+        const unitLabels = document.querySelectorAll(".unit"); // Select all unit spans
+        if (isMetric) {
+            unitLabels[0].textContent = "(cm)";  // Height unit
+            unitLabels[1].textContent = "(kg)";  // Weight unit
+        } else {
+            unitLabels[0].textContent = "(inches)";  // Height unit
+            unitLabels[1].textContent = "(lbs)";  // Weight unit
+        }
+    }
+
+    // Function to convert values only when switching to customary
+    function convertValues() {
+        if (!isMetric) {
+            // Convert metric values to customary
+            heightInput.value = Math.round(heightInput.value / 2.54); // cm to inches
+            weightInput.value = Math.round(weightInput.value * 2.20462); // kg to lbs
+        } else {
+            // Reset values back to metric (no conversion needed for metric)
+            heightInput.value = Math.round(heightInput.value * 2.54); // inches to cm
+            weightInput.value = Math.round(weightInput.value / 2.20462); // lbs to kg
+        }
+    }
+
+    // Toggle button event listener
+    toggleButton.addEventListener("click", function () {
+        isMetric = !isMetric; // Toggle the unit system
+        updateToggleButtonText(); // Update button text
+        convertValues(); // Convert input values if switching units
+        updatePlaceholders(); // Update Label
+        predictHeartRate(); // Recalculate heart rate with updated values (if applicable)
+    });
+
+    updateToggleButtonText(); // Initialize button text on page load
+    updatePlaceholders(); // Initialize placeholders on page load
+});
+
+
+
 
 // Function to remove duplicates by ID
 function removeDuplicatesByID(data) {
@@ -69,22 +121,29 @@ function logTransform(value) {
 }
 
 function predictHeartRate() {
-    const height = parseFloat(document.getElementById("height").value);
-    const weight = parseFloat(document.getElementById("weight").value);
+    // Retrieve input values
+    let height = parseFloat(document.getElementById("height").value);
+    let weight = parseFloat(document.getElementById("weight").value);
     const age = parseInt(document.getElementById("age").value);
     const sex = parseInt(document.getElementById("gender").value);
     const speed = parseFloat(document.getElementById("speed").value);
-    const time = parseFloat(document.getElementById("time").value) * 60;
+    const time = parseFloat(document.getElementById("time").value) * 60; // Convert minutes to seconds
 
-    // Apply log transformation
+    // Convert height and weight to metric if they are in customary units
+    if (!isMetric) {
+        height = height * 2.54; // Convert inches to cm
+        weight = weight / 2.20462; // Convert lbs to kg
+    }
+
+    // Apply logarithmic transformation for prediction
     const logHeight = logTransform(height);
     const logWeight = logTransform(weight);
     const logAge = logTransform(age);
     const logSpeed = logTransform(speed);
     const logTime = logTransform(time);
 
-    // Predict HR
-    let estimatedHR = 
+    // Predict HR using coefficients
+    let estimatedHR =
         logCoefficients.w0 +
         (logCoefficients.height * logHeight) +
         (logCoefficients.weight * logWeight) +
@@ -93,18 +152,23 @@ function predictHeartRate() {
         (logCoefficients.speed * logSpeed) +
         (logCoefficients.time * logTime);
 
-    // Adjust HR based on speed
+    // Adjust HR based on speed thresholds
     if (speed < 8) {
         estimatedHR *= 0.65;
     } else if (speed >= 8 && speed <= 12) {
         estimatedHR *= 0.85;
     }
 
+    // Clamp HR between realistic bounds
     estimatedHR = Math.max(40, Math.min(Math.round(estimatedHR), 220));
 
+    // Update predicted HR display
     document.getElementById("predictedHR").textContent = estimatedHR + " bpm";
+
+    // Assign heart rate zone based on predicted HR
     assignHeartRateZone(estimatedHR, age);
 }
+
 
 // Attach event listeners
 function attachInputListeners() {
@@ -116,20 +180,24 @@ function attachInputListeners() {
 document.addEventListener("DOMContentLoaded", attachInputListeners);
 
 function assignHeartRateZone(hr, age) {
-    let maxHR = 220 - age;
-    let percentageHR = (hr / maxHR) * 100;
+    const maxHR = 220 - age; // Maximum heart rate calculation
+    const percentageHR = (hr / maxHR) * 100; // HR as a percentage of max HR
     let zone = "";
 
+    // Determine the correct zone based on percentage of max HR
     if (percentageHR < 60) zone = "zone1";
     else if (percentageHR < 70) zone = "zone2";
     else if (percentageHR < 80) zone = "zone3";
     else if (percentageHR < 90) zone = "zone4";
     else zone = "zone5";
 
-    document.getElementById("zoneDisplay").textContent = document.getElementById(zone).textContent;
+    // Update zone display text
+    document.getElementById("zoneDisplay").textContent =
+        document.getElementById(zone).textContent;
+
+    // Highlight the active zone and show its description
     highlightZone(zone);
 }
-
 function highlightZone(activeZone) {
     const zones = document.querySelectorAll(".zone");
     const descriptions = document.querySelectorAll(".zone-info");
@@ -142,6 +210,7 @@ function highlightZone(activeZone) {
         desc.style.display = desc.id === `info-${activeZone}` ? "block" : "none";
     });
 }
+
 
 // Mario GIF handling
 let marioGif = document.getElementById("marioGif");

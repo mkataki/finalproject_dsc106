@@ -1,5 +1,5 @@
 body {
-    font-family: Arial, sans-serif;
+    font-family: 'Press Start 2P', monospace;
     text-align: center;
     margin: 0;
     padding: 0;
@@ -52,6 +52,7 @@ h1, #mario-header, #heart-header, #yourturn-header, #mario-training-header, #pea
 
 
 
+
 /* Super Mario Colors - Each letter */
 #intro-screen h1 span:nth-child(1) { color: #049cd8; } /* Blue */
 #intro-screen h1 span:nth-child(2) { color: #e52521; } /* Red */
@@ -90,8 +91,8 @@ h1, #mario-header, #heart-header, #yourturn-header, #mario-training-header, #pea
 }
 
 #intro-screen p {
-    font-family: 'Arial', sans-serif;
-    font-size: 1.2rem;
+    font-family: 'Press Start 2P', monospace;
+    font-size: 0.9rem;
     color: #555;
     line-height: 1.6;
     text-align: center;
@@ -116,6 +117,7 @@ h1, #mario-header, #heart-header, #yourturn-header, #mario-training-header, #pea
 /* --- BUTTON STYLES --- */
 #start-button,
 #next-button {
+    font-family: 'Press Start 2P', monospace;
     padding: 14px 25px;
     font-size: 18px;
     background-color: #ffcc00;
@@ -174,7 +176,7 @@ h1, #mario-header, #heart-header, #yourturn-header, #mario-training-header, #pea
 
 /* Paragraph Styling */
 #maxhr-screen p {
-    font-size: 1.1rem;
+    font-size: 0.9rem;
     color: #555;
     max-width: 800px;
     margin: 15px auto;
@@ -183,9 +185,38 @@ h1, #mario-header, #heart-header, #yourturn-header, #mario-training-header, #pea
     border-radius: 8px;
     box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
 }
+/* Style for the big box */
+.info-container {
+    background-color: rgba(255, 255, 255, 0.9); /* Light background with transparency */
+    border-radius: 8px; /* Rounded corners */
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1); /* Soft shadow for depth */
+    padding: 20px; /* Padding inside the box */
+    max-width: 800px; /* Limit the width of the box */
+    margin: 20px auto; /* Center the box and add spacing */
+}
+
+/* Style for paragraphs inside the big box */
+.info-container p {
+    font-size: 0.85rem;
+    color: #555;
+    margin-bottom: 10px; /* Space between paragraphs */
+}
+
+/* Exclude the title from the big box styling */
+#scenario-screen h1 {
+    background-color: transparent; /* No background for the title */
+    margin-bottom: 20px; /* Add spacing below the title */
+    text-align: center;
+}
+
+#scenario-screen p,
+#scenario-screen .button-container button {
+    font-family: 'Press Start 2P', monospace; /* Use Press Start 2P font */
+}
 
 /* --- Button Styling --- */
 #next-button {
+    font-family: 'Press Start 2P', monospace;
     padding: 14px 25px;
     font-size: 18px;
     background-color: #ffcc00;
@@ -221,12 +252,13 @@ h1, #mario-header, #heart-header, #yourturn-header, #mario-training-header, #pea
 }
 
 .timeline-button {
+    font-family: 'Press Start 2P', monospace;
     background-color: #4CAF50;
     color: white;
     border: none;
     padding: 10px 20px;
     text-align: center;
-    font-size: 12px;
+    font-size: 10px;
     cursor: pointer;
     border-radius: 5px;
     transition: background-color 0.3s;
@@ -253,6 +285,16 @@ h1, #mario-header, #heart-header, #yourturn-header, #mario-training-header, #pea
         -6px  6px 0px #000000,
          6px  6px 0px #000000,
          0px  0px 12px rgba(0, 0, 0, 0.5); /* Soft glow */
+}
+.personal-info-container {
+    background-color: rgba(255, 255, 255, 0.9); /* Light background with transparency */
+    border-radius: 8px; /* Rounded corners */
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1); /* Soft shadow for depth */
+    padding: 20px; /* Internal spacing */
+    max-width: 600px; /* Limit width */
+    margin: 20px auto; /* Center the box and add spacing */
+    font-family: 'Press Start 2P', monospace; /* Consistent font styling */
+    font-size: 0.8rem
 }
 
 /* Apply Super Mario colors to each letter */
@@ -299,7 +341,24 @@ h1, #mario-header, #heart-header, #yourturn-header, #mario-training-header, #pea
 #mario-header span:nth-child(31) { color: #43b047; } /* Green */
 #mario-header span:nth-child(33) { color: #049cd8; } /* Blue */
 
+#toggle-button {
+    font-family: 'Press Start 2P', monospace;
+    background-color: #4CAF50; /* Green color matching the bottom buttons */
+    color: white;
+    border: none;
+    padding: 10px 20px; /* Adjust padding for better appearance */
+    text-align: center;
+    font-size: 10px; /* Font size matching the buttons */
+    cursor: pointer;
+    border-radius: 5px; /* Rounded corners */
+    transition: background-color 0.3s ease-in-out, transform 0.2s ease; /* Hover effect */
+}
 
+/* Hover effect for the toggle button */
+#toggle-button:hover {
+    background-color: #45a049; /* Slightly darker green on hover */
+    transform: scale(1.05); /* Slight scale-up effect */
+}
 
 /* --- Responsive Design --- */
 @media (max-width: 768px) {
@@ -351,13 +410,13 @@ h1, #mario-header, #heart-header, #yourturn-header, #mario-training-header, #pea
 
 /* BPM Info */
 #bpm-info {
-    margin-top:auto; /* Reduced margin-top to move it up */
+    margin-top:10px; /* Reduced margin-top to move it up */
     font-size: 1rem; /* Slightly smaller font size */
 }
 
 /* Update the bpm-info span for font size */
 #bpm-info h2 {
-    font-size: 1.2rem; /* Slightly smaller font for the heart rate and zone info */
+    font-size: 1rem; /* Slightly smaller font for the heart rate and zone info */
 }
 
 
@@ -370,8 +429,8 @@ h1, #mario-header, #heart-header, #yourturn-header, #mario-training-header, #pea
 }
 
 .zone {
-    padding: 15px;
-    border-radius: 10px;
+    padding: 10px;
+    border-radius: 8px;
     font-weight: bold;
     text-align: center;
     flex: 1;
@@ -397,10 +456,10 @@ h1, #mario-header, #heart-header, #yourturn-header, #mario-training-header, #pea
 
 .zone-info {
     display: none; /* Initially hidden */
-    font-size: 14px;
+    font-size: 10px;
     color: black;
     text-align: center;
-    max-width: 600px;
+    max-width: 500px;
     margin: 0 auto;
 }
 
@@ -436,8 +495,8 @@ h1, #mario-header, #heart-header, #yourturn-header, #mario-training-header, #pea
 
 /* Text within yourturn screen */
 #yourturn-screen p {
-    font-family: 'Arial', sans-serif;
-    font-size: 1.2rem;
+    font-family: 'Press Start 2P', monospace;
+    font-size: 1rem;
     color: #555;
     line-height: 1.6;
     text-align: center;
@@ -498,6 +557,7 @@ h1, #mario-header, #heart-header, #yourturn-header, #mario-training-header, #pea
     height: 150px;
     overflow: hidden;
     margin-top: 20px;
+    margin-bottom: 10px;
     display: flex;
     justify-content: flex-start;
 }
